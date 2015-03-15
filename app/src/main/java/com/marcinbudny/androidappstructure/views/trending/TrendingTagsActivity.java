@@ -1,4 +1,4 @@
-package com.marcinbudny.androidappstructure;
+package com.marcinbudny.androidappstructure.views.trending;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -6,6 +6,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.marcinbudny.androidappstructure.R;
 
 
 public class TrendingTagsActivity extends ActionBarActivity {
