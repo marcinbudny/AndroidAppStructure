@@ -12,6 +12,9 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+
+        <service android:name=".infrastructure.NetworkService" />
+
         <activity
             android:name=".views.trending.TrendingTagsActivity"
             android:label="@string/app_name" >

@@ -1,41 +1,32 @@
 package com.marcinbudny.androidappstructure.views.trending;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.marcinbudny.androidappstructure.R;
+import com.marcinbudny.androidappstructure.infrastructure.ThisApplication;
+import com.marcinbudny.androidappstructure.lib.views.TrendingTagsPresenter;
+import com.marcinbudny.androidappstructure.lib.views.TrendingTagsView;
+
+import javax.inject.Inject;
 
 
-public class TrendingTagsActivity extends ActionBarActivity {
+public class TrendingTagsActivity extends ActionBarActivity implements TrendingTagsView {
+
+    @Inject
+    public TrendingTagsPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trending_tags);
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
-                    .commit();
-        }
+
+        ThisApplication.inject(this);
     }
 
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            return inflater.inflate(R.layout.fragment_trending_tags, container, false);
-        }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        presenter.onViewStarted();
     }
 }
