@@ -11,8 +11,10 @@ import com.marcinbudny.androidappstructure.lib.logic.AccessTokenStorage;
 import com.marcinbudny.androidappstructure.lib.logic.AccessTokenStorageImpl;
 import com.marcinbudny.androidappstructure.lib.logic.Authenticator;
 import com.marcinbudny.androidappstructure.lib.logic.AuthenticatorImpl;
-import com.marcinbudny.androidappstructure.lib.views.TrendingTagsPresenter;
-import com.marcinbudny.androidappstructure.views.trending.TrendingTagsActivity;
+import com.marcinbudny.androidappstructure.lib.logic.TrendsDownloader;
+import com.marcinbudny.androidappstructure.lib.logic.TrendsDownloaderImpl;
+import com.marcinbudny.androidappstructure.lib.views.TrendsPresenter;
+import com.marcinbudny.androidappstructure.views.trending.TrendsActivity;
 import com.octo.android.robospice.SpiceManager;
 import com.squareup.otto.Bus;
 
@@ -27,7 +29,7 @@ import retrofit.converter.GsonConverter;
 @Module(library=true, // todo: remove
         injects={
         NetworkService.class,
-        TrendingTagsActivity.class
+        TrendsActivity.class
 })
 public class MainModule {
 
@@ -94,7 +96,18 @@ public class MainModule {
     }
 
     @Provides
-    public TrendingTagsPresenter provideTrendingTagsPresenter(Authenticator authenticator, AccessTokenStorage accessTokenStorage) {
-        return new TrendingTagsPresenter(authenticator, accessTokenStorage);
+    @Singleton
+    public TrendsDownloader provideTrendsDownloader(RequestRunner requestRunner, Bus bus) {
+        return new TrendsDownloaderImpl(requestRunner, bus);
+    }
+
+    @Provides
+    public TrendsPresenter provideTrendingTagsPresenter(
+            Bus bus,
+            Authenticator authenticator,
+            AccessTokenStorage accessTokenStorage,
+            TrendsDownloader trendsDownloader) {
+
+        return new TrendsPresenter(bus, authenticator, accessTokenStorage, trendsDownloader);
     }
 }

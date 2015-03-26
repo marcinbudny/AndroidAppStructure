@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">AndroidAppStructure</string>
     <string name="hello_world">Hello world!</string>
+    <string name="authentication_error">Error while authenticating with Twitter!</string>
+    <string name="trends_download_error">Could not download trends!</string>
 </resources>
