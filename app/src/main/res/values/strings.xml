@@ -3,4 +3,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="authentication_error">Error while authenticating with Twitter!</string>
     <string name="trends_download_error">Could not download trends!</string>
+    <string name="statuses_activity_title">Statuses</string>
+    <string name="trends_activity_title">Trends</string>
+    <string name="statuses_download_error">Could not download statuses!</string>
 </resources>

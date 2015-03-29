@@ -1,10 +1,12 @@
-package com.marcinbudny.androidappstructure.lib.views;
+package com.marcinbudny.androidappstructure.lib.views.trends;
 
 import com.marcinbudny.androidappstructure.lib.Settings;
 import com.marcinbudny.androidappstructure.lib.api.contract.Trend;
+import com.marcinbudny.androidappstructure.lib.api.contract.TrendQueryResult;
 import com.marcinbudny.androidappstructure.lib.logic.AccessTokenStorage;
 import com.marcinbudny.androidappstructure.lib.logic.Authenticator;
 import com.marcinbudny.androidappstructure.lib.logic.TrendsDownloader;
+import com.marcinbudny.androidappstructure.testutils.TrendQueryResultListBuilder;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.squareup.otto.Bus;
 
@@ -126,6 +128,28 @@ public class TrendsPresenterTests {
         fixture.verifyTrendsDownloadErrorDisplayed();
     }
 
+    @Test
+    public void when_trend_selected_should_navigate_to_statuses_view_passing_the_query() throws Exception {
+        // given
+        TrendsPresenterFixture fixture = new TrendsPresenterFixture()
+                .configure();
+
+        TrendQueryResult.List trendQueryResults = new TrendQueryResultListBuilder()
+                .withTrend("trend1", "query1")
+                .withTrend("trend2", "query2")
+                .build();
+        Trend.List trends = trendQueryResults.get(0).trends;
+
+        TrendsDownloader.Success success = new TrendsDownloader.Success(trends);
+        fixture.sut.onTrendsDownloadSuccess(success);
+
+        // when
+        fixture.sut.onTrendSelected(1);
+
+        // then
+        fixture.verifyNavigatedToStatusesWithQuery("query2");
+    }
+
     private static class TrendsPresenterFixture {
 
         private Authenticator authenticator = mock(Authenticator.class);
@@ -175,6 +199,10 @@ public class TrendsPresenterTests {
 
         public void verifyTrendsDownloadErrorDisplayed() {
             verify(view).displayTrendsDownloadError();
+        }
+
+        public void verifyNavigatedToStatusesWithQuery(String expectedQuery) {
+            verify(view).navigateToStatusesWithQuery(expectedQuery);
         }
     }
 }

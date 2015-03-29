@@ -11,10 +11,14 @@ import com.marcinbudny.androidappstructure.lib.logic.AccessTokenStorage;
 import com.marcinbudny.androidappstructure.lib.logic.AccessTokenStorageImpl;
 import com.marcinbudny.androidappstructure.lib.logic.Authenticator;
 import com.marcinbudny.androidappstructure.lib.logic.AuthenticatorImpl;
+import com.marcinbudny.androidappstructure.lib.logic.StatusesDownloader;
+import com.marcinbudny.androidappstructure.lib.logic.StatusesDownloaderImpl;
 import com.marcinbudny.androidappstructure.lib.logic.TrendsDownloader;
 import com.marcinbudny.androidappstructure.lib.logic.TrendsDownloaderImpl;
-import com.marcinbudny.androidappstructure.lib.views.TrendsPresenter;
-import com.marcinbudny.androidappstructure.views.trending.TrendsActivity;
+import com.marcinbudny.androidappstructure.lib.views.statuses.StatusesPresenter;
+import com.marcinbudny.androidappstructure.lib.views.trends.TrendsPresenter;
+import com.marcinbudny.androidappstructure.views.statuses.StatusesActivity;
+import com.marcinbudny.androidappstructure.views.trends.TrendsActivity;
 import com.octo.android.robospice.SpiceManager;
 import com.squareup.otto.Bus;
 
@@ -29,7 +33,8 @@ import retrofit.converter.GsonConverter;
 @Module(library=true, // todo: remove
         injects={
         NetworkService.class,
-        TrendsActivity.class
+        TrendsActivity.class,
+        StatusesActivity.class
 })
 public class MainModule {
 
@@ -102,12 +107,25 @@ public class MainModule {
     }
 
     @Provides
-    public TrendsPresenter provideTrendingTagsPresenter(
+    public TrendsPresenter provideTrendsPresenter(
             Bus bus,
             Authenticator authenticator,
             AccessTokenStorage accessTokenStorage,
             TrendsDownloader trendsDownloader) {
 
         return new TrendsPresenter(bus, authenticator, accessTokenStorage, trendsDownloader);
+    }
+
+    @Provides
+    @Singleton
+    public StatusesDownloader provideStatusesDownloader(RequestRunner requestRunner, Bus bus) {
+        return new StatusesDownloaderImpl(requestRunner, bus);
+    }
+
+    @Provides
+    public StatusesPresenter provideStatusesPresenter(
+            Bus bus,
+            StatusesDownloader statusesDownloader) {
+        return new StatusesPresenter(bus, statusesDownloader);
     }
 }

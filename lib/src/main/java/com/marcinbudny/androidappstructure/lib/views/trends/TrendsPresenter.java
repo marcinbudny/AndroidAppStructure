@@ -1,6 +1,7 @@
-package com.marcinbudny.androidappstructure.lib.views;
+package com.marcinbudny.androidappstructure.lib.views.trends;
 
 import com.marcinbudny.androidappstructure.lib.Settings;
+import com.marcinbudny.androidappstructure.lib.api.contract.Trend;
 import com.marcinbudny.androidappstructure.lib.logic.AccessTokenStorage;
 import com.marcinbudny.androidappstructure.lib.logic.Authenticator;
 import com.marcinbudny.androidappstructure.lib.logic.TrendsDownloader;
@@ -14,6 +15,7 @@ public class TrendsPresenter {
     private final AccessTokenStorage accessTokenStorage;
     private TrendsDownloader trendsDownloader;
     private TrendsView view;
+    private Trend.List trends;
 
     public TrendsPresenter(
             Bus bus,
@@ -68,11 +70,17 @@ public class TrendsPresenter {
 
     @Subscribe
     public void onTrendsDownloadSuccess(TrendsDownloader.Success success) {
-        view.displayTrends(success.getTrends());
+        trends = success.getTrends();
+        view.displayTrends(trends);
     }
 
     @Subscribe
     public void onTrendsDownloadFailure(TrendsDownloader.Failure failure) {
         view.displayTrendsDownloadError();
+    }
+
+    public void onTrendSelected(int trendIndex) {
+        Trend trend = trends.get(trendIndex);
+        view.navigateToStatusesWithQuery(trend.query);
     }
 }

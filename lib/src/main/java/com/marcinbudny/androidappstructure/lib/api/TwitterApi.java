@@ -1,6 +1,7 @@
 package com.marcinbudny.androidappstructure.lib.api;
 
 import com.marcinbudny.androidappstructure.lib.api.contract.BearerToken;
+import com.marcinbudny.androidappstructure.lib.api.contract.StatusQueryResponse;
 import com.marcinbudny.androidappstructure.lib.api.contract.TrendQueryResult;
 
 import retrofit.http.Field;
@@ -19,4 +20,7 @@ public interface TwitterApi {
 
     @GET("/1.1/trends/place.json")
     TrendQueryResult.List getTrends(@Query("id") int locationId);
+
+    @GET("/1.1/search/tweets.json")
+    StatusQueryResponse searchStatuses(@Query("q") String query);
 }
