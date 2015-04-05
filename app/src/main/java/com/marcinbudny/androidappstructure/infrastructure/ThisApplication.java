@@ -24,6 +24,4 @@ public class ThisApplication extends Application {
     public static ThisApplication getInstance() {
         return instance;
     }
-
-
 }

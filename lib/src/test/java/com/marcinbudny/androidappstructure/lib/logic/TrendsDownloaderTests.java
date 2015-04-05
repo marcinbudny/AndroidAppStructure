@@ -142,7 +142,7 @@ public class TrendsDownloaderTests {
 
         public void verifySuccessEventSent() {
             Object event = bus.getNextEventOrThrow();
-            assertThat(event, CoreMatchers.instanceOf(TrendsDownloader.Success.class));
+            assertThat(event, instanceOf(TrendsDownloader.Success.class));
         }
 
         public void verifySuccessEventContains(Trend.List expectedTrends) {
@@ -159,7 +159,7 @@ public class TrendsDownloaderTests {
 
         public void verifyFailureEventSent() {
             Object event = bus.getNextEventOrThrow();
-            assertThat(event, CoreMatchers.instanceOf(TrendsDownloader.Failure.class));
+            assertThat(event, instanceOf(TrendsDownloader.Failure.class));
         }
     }
 }

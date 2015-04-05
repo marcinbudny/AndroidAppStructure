@@ -9,5 +9,5 @@ public interface TrendsView {
 
     void displayTrendsDownloadError();
 
-    void navigateToStatusesWithQuery(String expectedQuery);
+    void navigateToStatusesWithQuery(String query);
 }

@@ -30,8 +30,7 @@ import dagger.Provides;
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
 
-@Module(library=true, // todo: remove
-        injects={
+@Module(injects={
         NetworkService.class,
         TrendsActivity.class,
         StatusesActivity.class

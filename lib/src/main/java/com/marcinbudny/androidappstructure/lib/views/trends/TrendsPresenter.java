@@ -33,7 +33,6 @@ public class TrendsPresenter {
     }
 
     public void onViewStarted() {
-
         bus.register(this);
         getTrendingTags();
     }
@@ -43,7 +42,6 @@ public class TrendsPresenter {
     }
 
     private void getTrendingTags() {
-
         if(!accessTokenStorage.hasAccessToken())
             authenticate();
         else
